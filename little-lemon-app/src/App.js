@@ -1,5 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
+import './index.css';
+import Heading from './Header'
+import Nav from'./Nav';
+import Main from './Main';
+import Footer from'./Footer';
 
 function App() {
   return (
@@ -11,24 +15,13 @@ function App() {
         <meta name="og:image" content="Image/Logo.svg"/>
       </head>
       <body>
+        <Heading>
+        </Heading>
         <Nav>
-          <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Menu</a></li>
-            <li><a href="">Reservation</a></li>
-            <li><a href="">Order Online</a></li>
-            <li><a href="">Login</a></li>
-          </ul>
         </Nav>
-        <Header>
-          <img src="Images/Logo.svg"></img>
-        </Header>
         <Main>
-
         </Main>
         <Footer>
-          <p>Copyright LittleLemon</p>
         </Footer>
       </body>
     </html>
