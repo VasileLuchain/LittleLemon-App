@@ -1,4 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
+
+const initializeTimes = () => {
+  return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]; // Default times
+};
+
+// Reducer function to manage available times state
+const timesReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_TIMES":
+      const selectedDate = new Date(action.payload);
+      const day = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
+
+      // If it's a weekend, remove early slots
+      if (day === 0 || day === 6) {
+        return ["19:00", "20:00", "21:00", "22:00"];
+      }
+      return initializeTimes(); // Weekdays have all times available
+
+    default:
+      return state;
+  }
+};
 
 const ReservationForm = ({ onFormSubmit }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +31,17 @@ const ReservationForm = ({ onFormSubmit }) => {
   });
 
   const [errors, setErrors] = useState({});
+
+  // useReducer for managing available times
+  const [availableTimes, dispatch] = useReducer(timesReducer, initializeTimes());
+
+  const handleDateChange = (e) => {
+    const newDate = e.target.value;
+    setFormData({ ...formData, date: newDate });
+
+    // Dispatch an action to update available times
+    dispatch({ type: "UPDATE_TIMES", payload: newDate });
+  };
 
   const validateForm = () => {
     let newErrors = {};
@@ -26,13 +59,13 @@ const ReservationForm = ({ onFormSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onFormSubmit(formData);
+      onFormSubmit(formData); // Send data to parent component
     }
   };
 
   return (
     <form className="res-form" onSubmit={handleSubmit}>
-
+    <h1 className="res-title">Reservation Form</h1>
       {/* Date */}
       <label className="res-label" htmlFor="res-date">Date</label>
       <input
@@ -40,7 +73,7 @@ const ReservationForm = ({ onFormSubmit }) => {
         type="date"
         id="res-date"
         value={formData.date}
-        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+        onChange={handleDateChange}
       />
       {errors.date && <p className="error">{errors.date}</p>}
 
@@ -53,12 +86,9 @@ const ReservationForm = ({ onFormSubmit }) => {
         onChange={(e) => setFormData({ ...formData, time: e.target.value })}
       >
         <option value="">Select Time</option>
-        <option value="17:00">17:00</option>
-        <option value="18:00">18:00</option>
-        <option value="19:00">19:00</option>
-        <option value="20:00">20:00</option>
-        <option value="21:00">21:00</option>
-        <option value="22:00">22:00</option>
+        {availableTimes.map((time) => (
+          <option key={time} value={time}>{time}</option>
+        ))}
       </select>
       {errors.time && <p className="error">{errors.time}</p>}
 
@@ -92,7 +122,7 @@ const ReservationForm = ({ onFormSubmit }) => {
 
       {/* Submit Button */}
       <button className="submit-btn" type="submit">
-        Submit Form
+        Submit
       </button>
     </form>
   );
