@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import ReservationForm from "./ReservationsForm";
+import ReservationForm from "../ReservationsForm";
 
 test("renders all labels and headings correctly", () => {
     render(<ReservationForm onFormSubmit={() => {}}/>);
