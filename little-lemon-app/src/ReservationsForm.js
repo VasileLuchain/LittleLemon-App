@@ -1,131 +1,106 @@
-import React, { useState, useReducer } from "react";
+import { useState } from 'react';
 
-const initializeTimes = () => {
-  return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]; // Default times
-};
 
-// Reducer function to manage available times state
-const timesReducer = (state, action) => {
-  switch (action.type) {
-    case "UPDATE_TIMES":
-      const selectedDate = new Date(action.payload);
-      const day = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
-
-      // If it's a weekend, remove early slots
-      if (day === 0 || day === 6) {
-        return ["19:00", "20:00", "21:00", "22:00"];
-      }
-      return initializeTimes(); // Weekdays have all times available
-
-    default:
-      return state;
-  }
-};
-
-const ReservationForm = ({ onFormSubmit }) => {
+const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
   const [formData, setFormData] = useState({
-    date: "",
-    time: "",
-    guests: "",
-    occasion: "",
+    date: '',
+    time: '',
+    guests: '',
+    occasion: '',
   });
 
   const [errors, setErrors] = useState({});
 
-  // useReducer for managing available times
-  const [availableTimes, dispatch] = useReducer(timesReducer, initializeTimes());
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updatedForm = { ...formData, [name]: value };
+    setFormData(updatedForm);
 
-  const handleDateChange = (e) => {
-    const newDate = e.target.value;
-    setFormData({ ...formData, date: newDate });
-
-    // Dispatch an action to update available times
-    dispatch({ type: "UPDATE_TIMES", payload: newDate });
+    if (name === 'date') {
+      updateTimes(value);
+      setFormData((prev) => ({ ...prev, time: '' }));
+    }
   };
 
-  const validateForm = () => {
-    let newErrors = {};
-
-    if (!formData.date) newErrors.date = "Please select a date.";
-    if (!formData.time) newErrors.time = "Please select a time.";
-    if (!formData.guests || formData.guests < 1 || formData.guests > 10)
-      newErrors.guests = "Guests must be between 1 and 10.";
-    if (!formData.occasion) newErrors.occasion = "Please select an occasion.";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.date) newErrors.date = 'Please select a date.';
+    if (!formData.time) newErrors.time = 'Please select a time.';
+    if (!formData.guests || formData.guests < 1) newErrors.guests = 'Enter number of guests.';
+    if (!formData.occasion) newErrors.occasion = 'Please select an occasion.';
+    return newErrors;
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      onFormSubmit(formData); // Send data to parent component
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      await submitAPI(formData);
     }
   };
 
   return (
     <form className="res-form" onSubmit={handleSubmit}>
-    <h1 className="res-title">Reservation Form</h1>
-      {/* Date */}
-      <label className="res-label" htmlFor="res-date">Date</label>
+      <h1 className="res-title">Reservation Form</h1>
+      <label className="res-label">Choose date:</label>
       <input
         className="res-input"
         type="date"
-        id="res-date"
+        name="date"
         value={formData.date}
-        onChange={handleDateChange}
+        onChange={handleChange}
+        required
       />
-      {errors.date && <p className="error">{errors.date}</p>}
 
-      {/* Time */}
-      <label className="res-label" htmlFor="res-time">Time</label>
+      <label className="res-label">Choose time:</label>
       <select
         className="res-input"
-        id="res-time"
+        name="time"
         value={formData.time}
-        onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+        onChange={handleChange}
+        required
       >
-        <option value="">Select Time</option>
+        <option value="">Select a time</option>
         {availableTimes.map((time) => (
           <option key={time} value={time}>{time}</option>
         ))}
       </select>
-      {errors.time && <p className="error">{errors.time}</p>}
 
-      {/* Number of Guests */}
-      <label className="res-label" htmlFor="guests">No. of Guests</label>
+      <label className="res-label">Number of guests:</label>
       <input
         className="res-input"
         type="number"
-        id="guests"
+        name="guests"
         min="1"
         max="10"
-        placeholder="Min: 1 Max: 10"
+        placeholder='Min:1 Max:10'
         value={formData.guests}
-        onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
+        onChange={handleChange}
+        required
       />
-      {errors.guests && <p className="error">{errors.guests}</p>}
 
-      {/* Occasion */}
-      <label className="res-label" htmlFor="occasion">Occasion</label>
+      <label className="res-label">Occasion:</label>
       <select
         className="res-input"
-        id="occasion"
+        name="occasion"
         value={formData.occasion}
-        onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
+        onChange={handleChange}
+        required
       >
-        <option value="">Select Occasion</option>
+        <option value="">Select</option>
         <option value="Birthday">Birthday</option>
         <option value="Anniversary">Anniversary</option>
       </select>
-      {errors.occasion && <p className="error">{errors.occasion}</p>}
+      {errors.occasion && <div className="error">{errors.occasion}</div>}
 
-      {/* Submit Button */}
       <button className="submit-btn" type="submit">
-        Submit
+        Make Your Reservation
       </button>
     </form>
   );
-};
+}
 
-export default ReservationForm;
+export default ReservationsForm;

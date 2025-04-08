@@ -7,6 +7,8 @@ import About from './About';
 import Menu from './Menu';
 import Reservation from './Reservations';
 import Login from './Login';
+import { submitAPI } from './api/bookingAPI';
+import ConfirmationPage from './ConfirmPage';
 
 
 function App() {
@@ -17,8 +19,9 @@ function App() {
             <Route path="/" element={<Home />}/>
             <Route path="/About" element={<About/>}/>
             <Route path="/menu" element={<Menu />}/>
-            <Route path="/reservations" element={<Reservation />}/>
+            <Route path="/reservations" element={<Reservation submitAPI={submitAPI} />} />
             <Route path="/login" element={<Login/>}/>
+            <Route path="/confirmation" element={<ConfirmationPage />} />
           </Routes>
     </Router>
   );

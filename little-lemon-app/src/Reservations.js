@@ -1,16 +1,39 @@
 import './index.css';
 import descImg from "./Images/restaurant.jpg";
+import React, { useReducer } from "react";
+import ReservationsForm from './ReservationsForm';
+import { fetchAPI, submitAPI } from './api/bookingAPI';
+import { useNavigate } from 'react-router-dom';
 
-import React, { useState } from "react";
-import ReservationForm from './ReservationsForm';
 
+const timesReducer = (state, action) => {
+    switch (action.type) {
+      case 'UPDATE_TIMES':
+        return action.payload;
+      default:
+        return state;
+    }
+  };
 
-const Reservation = () => {
-    const [reservationData, setReservationData] = useState(null);
+  function Reservations() {
+    const [availableTimes, dispatch] = useReducer(timesReducer, []);
+    const navigate = useNavigate();
 
-    const handleFormSubmit = (data) => {
-        setReservationData(data);
-        console.log("Reservation Data Received:", data);
+    const updateTimes = async (date) => {
+        try {
+          const times = await fetchAPI(date);
+          dispatch({ type: 'UPDATE_TIMES', payload: times });
+        } catch {
+          dispatch({ type: 'UPDATE_TIMES', payload: [] });
+        }
+    };
+
+    const handleFormSubmit = async (formData) => {
+        const success = await submitAPI(formData);
+        if (success) {
+          localStorage.setItem('latestReservation', JSON.stringify(formData));
+          navigate('/confirmation');
+        }
     };
 
 
@@ -28,18 +51,13 @@ const Reservation = () => {
                 <img src={descImg} className='desc-img' alt='Header'/>
             </section>
             <section className='form-sec'>
-                <ReservationForm onFormSubmit={handleFormSubmit}/>
-                {reservationData && (
-                    <section className="reservation-summary">
-                        <h3>Reservation Summary</h3>
-                        <p><strong>Date:</strong> {reservationData.date}</p>
-                        <p><strong>Time:</strong> {reservationData.time}</p>
-                        <p><strong>No. of Guests:</strong> {reservationData.guests}</p>
-                        <p><strong>occation:</strong> {reservationData.occation}</p>
-                    </section>
-                )}
+                <ReservationsForm
+                    availableTimes={availableTimes}
+                    updateTimes={updateTimes}
+                    submitAPI={handleFormSubmit}
+                />
             </section>
         </main>
     )
 }
-export default Reservation;
+export default Reservations;
