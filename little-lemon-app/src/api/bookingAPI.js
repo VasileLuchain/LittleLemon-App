@@ -1,26 +1,31 @@
-const availableTimesByDate = {
-    '2023-08-29': ['10:00', '11:00', '12:00'],
-    '2023-09-01': ['10:00', '11:00', '12:00'],
-    '2023-09-02': ['14:00', '15:00', '16:00'],
-    '2023-09-03': ['10:00', '11:00', '12:00'],
-    '2023-09-04': ['14:00', '15:00', '16:00'],
-    '2023-09-05': ['10:00', '11:00', '12:00'],
-    '2023-09-06': ['14:00', '15:00', '16:00'],
-    '2023-09-07': ['10:00', '11:00', '12:00'],
-    '2023-09-08': ['14:00', '15:00', '16:00'],
-    '2023-09-09': ['10:00', '11:00', '12:00'],
-    '2023-09-10': ['14:00', '15:00', '16:00'],
-    '2023-09-11': ['10:00', '11:00', '12:00'],
-    '2023-09-12': ['14:00', '15:00', '16:00'],
-    '2023-09-13': ['10:00', '11:00', '12:00'],
-    '2023-09-14': ['14:00', '15:00', '16:00'],
-    '2023-09-15': ['10:00', '11:00', '12:00'],
-    '2023-09-16': ['14:00', '15:00', '16:00'],
-    '2023-09-17': ['10:00', '11:00', '12:00'],
-    '2023-09-18': ['14:00', '15:00', '16:00'],
-    '2023-09-19': ['10:00', '11:00', '12:00'],
-    '2023-09-20': ['14:00', '15:00', '16:00'],
-  };
+// Check if a date is a weekend (Saturday=6, Sunday=0)
+const isWeekend = (date) => {
+  const day = date.getDay();
+  return day === 0 || day === 6;
+};
+
+// Generate next 14 days of available times
+const generateAvailableTimes = () => {
+  const today = new Date();
+  const result = {};
+
+  for (let i = 1; i <= 14; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    const dateString = date.toISOString().split('T')[0];
+
+    //Assing time based on weekend / weekday
+    if (isWeekend(date)) {
+      result[dateString] = ['14:00', '15:00', '16:00'];
+    } else {
+      result[dateString] = ['10:00', '11:00', '12:00'];
+    }
+  }
+
+  return result;
+};
+
+const availableTimesByDate = generateAvailableTimes();
 
 
   const fetchAPI = (date) => {
@@ -37,7 +42,7 @@ const availableTimesByDate = {
   }
 
   const submitAPI = (formData) => {
-    
+
     availableTimesByDate[formData.date] = availableTimesByDate[formData.date].filter(time => time !== formData.time);
 
     return new Promise((resolve, reject) => {
