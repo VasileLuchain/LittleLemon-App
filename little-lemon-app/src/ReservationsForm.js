@@ -129,8 +129,8 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
 
   return (
     <form className="res-form" onSubmit={handleSubmit}>
-      <h1 className="res-title">Reservation Form</h1>
-      <label className="res-label">Choose date:</label>
+      <legend className="res-title">Reservation Form</legend>
+      <label htmlFor="date" className="res-label">Choose date:</label>
       <input
         className="res-input"
         type="date"
@@ -140,7 +140,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
         required
       />
 
-      <label className="res-label">Choose time:</label>
+      <label htmlFor="time" className="res-label">Choose time:</label>
       <select
         className="res-input"
         name="time"
@@ -157,7 +157,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
       </select>
       {errors.time && <p className="error">{errors.time}</p>}
 
-      <label className="res-label">Number of guests:</label>
+      <label htmlFor="guests" className="res-label">Number of guests:</label>
       <input
         className="res-input"
         type="number"
@@ -171,7 +171,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
       />
       {errors.guests && <p className="error">{errors.guests}</p>}
 
-      <label className="res-label">Occasion:</label>
+      <label htmlFor="occation" className="res-label">Occasion:</label>
       <select
         className="res-input"
         name="occasion"

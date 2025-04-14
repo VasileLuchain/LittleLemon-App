@@ -50,7 +50,7 @@ const timesReducer = (state, action) => {
                 </header>
                 <img src={descImg} className='desc-img' alt='Header'/>
             </section>
-            <section className='form-sec'>
+            <section className='form-sec' aria-label='Reservation section'>
                 <ReservationsForm
                     availableTimes={availableTimes}
                     updateTimes={updateTimes}
