@@ -4,6 +4,7 @@ import React, { useReducer } from "react";
 import ReservationsForm from './ReservationsForm';
 import { fetchAPI, submitAPI } from './api/bookingAPI';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 
 const timesReducer = (state, action) => {
@@ -38,26 +39,30 @@ const timesReducer = (state, action) => {
 
 
     return (
+      <>
         <main className='booking-page'>
-            <section className='hero-bg'>
-                <header className='hero-head'>
-                <h1 className='hero-title'>Little Lemon</h1>
-                    <h3 className='hero-sub'>Chicago</h3>
-                    <p className='hero-desc'>Reserve one from our finest dining tables.
-                        Come in and enjoy the atmosphere of the little lemon
-                        restaurant, and see what great food is all about.
-                    </p>
-                </header>
-                <img src={descImg} className='desc-img' alt='Header'/>
-            </section>
-            <section className='form-sec' aria-label='Reservation section'>
-                <ReservationsForm
-                    availableTimes={availableTimes}
-                    updateTimes={updateTimes}
-                    submitAPI={handleFormSubmit}
-                />
-            </section>
+          <section className='hero-bg'>
+            <header className='hero-head'>
+              <h1 className='hero-title'>Little Lemon</h1>
+              <h3 className='hero-sub'>Chicago</h3>
+              <p className='hero-desc'>
+                Reserve one from our finest dining tables. Come in and enjoy the
+                atmosphere of the little lemon restaurant, and see what great food is all about.
+              </p>
+            </header>
+            <img src={descImg} className='desc-img' alt='Header' />
+          </section>
+
+          <section className='form-sec' aria-label='Reservation section'>
+            <ReservationsForm
+              availableTimes={availableTimes}
+              updateTimes={updateTimes}
+              submitAPI={handleFormSubmit}
+            />
+          </section>
         </main>
-    )
+        <Footer />
+      </>
+    );
 }
 export default Reservations;

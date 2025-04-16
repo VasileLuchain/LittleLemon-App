@@ -129,7 +129,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
 
   return (
     <form className="res-form" onSubmit={handleSubmit}>
-      <legend className="res-title">Reservation Form</legend>
+      <legend className="res-title"><h3>Reservation Form</h3></legend>
       <label htmlFor="date" className="res-label">Choose date:</label>
       <input
         className="res-input"
