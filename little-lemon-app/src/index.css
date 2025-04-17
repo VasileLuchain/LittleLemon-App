@@ -139,6 +139,10 @@ nav {
   padding-bottom: 20px;
   text-decoration: none;
 }
+.nav-logo {
+  padding-right: 15px;
+  transform: translateY(-3px);
+}
 .navbar {
   padding: 15px;
   display: flex;
@@ -149,6 +153,14 @@ nav {
   display: flex;
   gap: 30px;
   padding: 0;
+}
+.nav-item {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+.nav-list li:hover {
+  text-decoration: underline;
 }
 
 
@@ -229,14 +241,14 @@ nav {
   grid-template-columns: repeat(12, 1fr);
   column-gap: 20px;
 }
-img {
+.footer-img {
   object-fit: cover;
-  grid-column: 3 /5;
+  grid-column: 4/5;
   width: 100%;
   max-width: 300px;
   border-radius: 20px;
   position: relative;
-  transform: translateY(5px);
+  transform: translateX(65px);
   height: 100%;
   border-style: solid;
 }
@@ -281,3 +293,5 @@ img {
 .footer a:hover {
   text-decoration: underline;
 }
+
+

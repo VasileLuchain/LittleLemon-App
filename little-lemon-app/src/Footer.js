@@ -4,7 +4,7 @@ import footerImg from './Images/restaurant chef B.jpg';
 const Footer = () => {
     return (
         <footer className="footer">
-            <img src={footerImg} width={300}/>
+            <img className="footer-img" src={footerImg} width={300}/>
             <nav className="footer-doormat" aria-label="Doormat Navigation">
                 <h3>DOORMAT</h3>
                 <ul>
@@ -20,9 +20,9 @@ const Footer = () => {
             <nav className="footer-contact">
                 <h3>CONTACT</h3>
                 <ul>
-                    <li>Business</li>
-                    <li>Phone Number</li>
-                    <li>Email</li>
+                    <li><a href="#">Business</a></li>
+                    <li><a href="#">Phone Number</a></li>
+                    <li><a href="#">Email</a></li>
                 </ul>
             </nav>
             <nav className="footer-media" aria-label="Social Meida Links">
