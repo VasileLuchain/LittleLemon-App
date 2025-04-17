@@ -295,3 +295,17 @@ nav {
 }
 
 
+.confirmation-page {
+  background-color: #495e57;
+  padding: 40px 0;
+  color: white;
+  text-align: center;
+}
+.reservation-card {
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 500px;
+  background-color: #3d4f4a;
+}

@@ -12,6 +12,7 @@ const Nav = () => {
                 <li><Link className='nav-item' to="/menu">Menu</Link></li>
                 <li><Link className='nav-item' to="/reservations">Reservation</Link></li>
                 <li><Link className='nav-item' to="/login">Login</Link></li>
+                <li><Link className='nav-item' to="/confirmation">Confirmations</Link></li>
             </ul>
         </nav>
     )

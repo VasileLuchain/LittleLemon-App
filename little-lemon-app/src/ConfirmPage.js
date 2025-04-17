@@ -1,24 +1,25 @@
 import React from 'react';
 
-
 const ConfirmationPage = () => {
-    const reservationData = JSON.parse(localStorage.getItem('latestReservation'));
+  const reservations = JSON.parse(localStorage.getItem('reservationsList')) || [];
 
-    if (!reservationData) {
-      return <p>No reservation found.</p>;
-    }
+  if (reservations.length === 0) {
+    return <p className="confirmation-page">No reservations found.</p>;
+  }
 
-    const { date, time, guests, occasion } = reservationData;
+  return (
+    <div className="confirmation-page">
+      {reservations.map((res, index) => (
+        <div key={index} className="reservation-card">
+          <h2>Reservation Confirmed!!</h2>
+          <p><strong>Date:</strong> {res.date}</p>
+          <p><strong>Time:</strong> {res.time}</p>
+          <p><strong>No. of Guests:</strong> {res.guests}</p>
+          <p><strong>Occasion:</strong> {res.occasion}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-    return (
-      <div className="confirmation-page">
-        <h2>Reservation Confirmed! 🎉</h2>
-        <p><strong>Date:</strong> {date}</p>
-        <p><strong>Time:</strong> {time}</p>
-        <p><strong>Guests:</strong> {guests}</p>
-        <p><strong>Occasion:</strong> {occasion}</p>
-      </div>
-    );
-  };
-
-  export default ConfirmationPage;
+export default ConfirmationPage;

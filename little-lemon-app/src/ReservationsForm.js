@@ -119,10 +119,18 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+    const isValid = validate();
 
-    if (Object.keys(validationErrors).length === 0) {
+    if (isValid) {
+      // Save to "latestReservation"
+      localStorage.setItem('latestReservation', JSON.stringify(formData));
+
+      // Save to a running list of reservations
+      const existing = JSON.parse(localStorage.getItem('reservationsList')) || [];
+      existing.push(formData);
+      localStorage.setItem('reservationsList', JSON.stringify(existing));
+
+      // Proceed with actual submit logic
       await submitAPI(formData);
     }
   };
@@ -137,6 +145,8 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
         name="date"
         value={formData.date}
         onChange={handleChange}
+        min={new Date().toISOString().split("T")[0]}
+        max={new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]}
         required
       />
 
