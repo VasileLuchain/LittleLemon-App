@@ -88,7 +88,7 @@
 .special-display {
   grid-column: 4/10;
   display: grid;
-  grid-template-columns: repeat(3/ 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   grid-auto-flow: column;
 }
@@ -308,4 +308,62 @@ nav {
   margin: 20px auto;
   max-width: 500px;
   background-color: #3d4f4a;
+}
+
+@media (max-width: 768px){
+  .homepage-main,
+  .hero-bg,
+  .specials,
+  .booking-page,
+  .footer {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .hero-head {
+    grid-column: 1/-1;
+    text-align: center;
+  }
+  .hero-img {
+    grid-column: 1/-1;
+    max-width: 90%;
+    margin: 0 auto;
+    transform: translateY(0);
+  }
+  .special-title,
+  .menu-btn,
+  .special-display {
+    grid-column: 1/-1;
+    text-align: center;
+  }
+  .special-display {
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    justify-items: center;
+  }
+  .reveiew,
+  .about {
+    grid-column: 1/-1;
+  }
+  .form-sec,
+  .desc-img {
+    grid-column: 1/-1;
+  }
+  .desc-img {
+    max-width: 90%;
+    margin: 0 auto;
+    transform: translateY(0);
+  }
+  .footer-img {
+    grid-column: 1/-1;
+    max-width: 90%;
+    margin: 0;
+    transform: translateX(0);
+  }
+  .footer-doormat,
+  .footer-contact,
+  .footer-meida {
+    grid-column: 1/-1;
+    align-items: center;
+  }
 }

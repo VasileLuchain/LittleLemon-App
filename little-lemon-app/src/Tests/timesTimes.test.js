@@ -1,4 +1,4 @@
-import { timesReducer } from "../ReservationsForm";
+import { timesReducer } from "../Reservations";
 import { fetchAPI } from "../api/bookingAPI"
 import { describe, it, expect } from '@jest/globals';
 
@@ -25,7 +25,7 @@ describe('updateTimes', () => {
         const mockDate = "2023-09-01";
         const mockTimes = ['10:00', '11:00', '12:00'];
 
-        fetchAPI.mockResulvedValue(mockTimes);
+        fetchAPI.mockResolvedValue(mockTimes);
         await updateTimes(mockDate);
 
         expect(fetchAPI).toHaveBeenCalledWith(mockDate);
@@ -66,4 +66,4 @@ describe('timesReducer', () => {
       const newState = timesReducer(initialState, action);
       expect(newState).toEqual(initialState);
     });
-  });
+});

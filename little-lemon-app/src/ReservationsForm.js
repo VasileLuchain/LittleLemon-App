@@ -140,6 +140,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
       <legend className="res-title"><h3>Reservation Form</h3></legend>
       <label htmlFor="date" className="res-label">Choose date:</label>
       <input
+        id="date"
         className="res-input"
         type="date"
         name="date"
@@ -153,6 +154,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
       <label htmlFor="time" className="res-label">Choose time:</label>
       <select
         className="res-input"
+        id="time"
         name="time"
         value={formData.time}
         onChange={handleChange}
@@ -172,6 +174,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
         className="res-input"
         type="number"
         name="guests"
+        id="guests"
         min="1"
         max="10"
         placeholder='Min:1 Max:10'
@@ -185,6 +188,7 @@ const ReservationsForm = ({ availableTimes, updateTimes, submitAPI }) => {
       <select
         className="res-input"
         name="occasion"
+        id="occation"
         value={formData.occasion}
         onChange={handleChange}
         required

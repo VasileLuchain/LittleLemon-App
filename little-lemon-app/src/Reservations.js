@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
 
-const timesReducer = (state, action) => {
+export const timesReducer = (state, action) => {
     switch (action.type) {
       case 'UPDATE_TIMES':
         return action.payload;

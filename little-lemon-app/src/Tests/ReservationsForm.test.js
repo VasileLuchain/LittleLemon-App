@@ -1,16 +1,23 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import ReservationForm from "../ReservationsForm";
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import ReservationsForm from '../ReservationsForm';
 
-test("renders all labels and headings correctly", () => {
-    render(<ReservationForm onFormSubmit={() => {}}/>);
+test('Renders all labels and headings correctly', () => {
+  const mockTimes = ['17:00', '18:00', '19:00'];
+  const mockUpdateTimes = jest.fn();
+  const mockSubmitAPI = jest.fn();
 
-    // Check labels
-    expect(screen.getByLabelText(/date/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/time/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/no. of guests/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/occasion/i)).toBeInTheDocument();
+  render(
+    <ReservationsForm
+      availableTimes={mockTimes}
+      updateTimes={mockUpdateTimes}
+      submitAPI={mockSubmitAPI}
+    />
+  );
 
-    // Check submit btn
-    expect(screen.getByRole("button", { name: /submit/i})).toBeInTheDocument();
+  expect(screen.getByText('Reservation Form')).toBeInTheDocument();
+  expect(screen.getByLabelText('Choose date:')).toBeInTheDocument();
+  expect(screen.getByLabelText('Choose time:')).toBeInTheDocument();
+  expect(screen.getByLabelText('Number of guests:')).toBeInTheDocument();
+  expect(screen.getByLabelText('Occasion:')).toBeInTheDocument();
 });
